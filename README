@@ -1,0 +1,4 @@
+pallete gotten from https://colorhunt.co/palette/00363805505253b8bbf3f2c9
+use 
+weasyprint index.html out.pdf 
+to run
