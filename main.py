@@ -4,10 +4,15 @@ from datetime import datetime
 app = Flask(__name__)
 
 messages = []
+max_messages = 10
 
 def get_next_id():
     return len(messages)
 
+@app.route('/politics')
+def politics():
+    return render_template('politics.html')
+    
 @app.route('/', methods=['GET', 'POST'])
 def index():
     filter_tag = request.args.get('filter')
@@ -24,10 +29,10 @@ def index():
         selected_categories = request.form.getlist('categories')
 
         if not post.strip() and (comment is None or not comment.strip()):
-            return render_template('index.html', messages=messages, error="Message or comment cannot be blank.", categories=["Secrets", "Family", "Health", "Confession", "Other"], filter=filter_tag)
+            return render_template('index.html', messages=messages[-max_messages:], error="Message or comment cannot be blank.", categories=["Secrets", "Family", "Health", "Confession", "Other"], filter=filter_tag)
 
         if len(selected_categories) > 2:
-            return render_template('index.html', messages=messages, categories=["Secrets", "Family", "Health", "Confession", "Other"], error="You can select up to 2 categories.", filter=filter_tag)
+            return render_template('index.html', messages=messages[-max_messages:], categories=["Secrets", "Family", "Health", "Confession", "Other"], error="You can select up to 2 categories.", filter=filter_tag)
 
         timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
@@ -60,7 +65,7 @@ def index():
 
     filtered_messages = [message for message in messages if filter_tag is None or filter_tag == 'all' or filter_tag in message['categories']]
 
-    return render_template('index.html', messages=filtered_messages, error=None, categories=["Secrets", "Family", "Health", "Confession", "Other"], filter=filter_tag)
+    return render_template('index.html', messages=filtered_messages[-max_messages:], error=None, categories=["Secrets", "Family", "Health", "Confession", "Other"], filter=filter_tag)
 
 if __name__ == '__main__':
     app.run()
