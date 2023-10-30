@@ -9,9 +9,9 @@ max_messages = 10
 def get_next_id():
     return len(messages)
 
-@app.route('/politics')
+@app.route('/policies')
 def politics():
-    return render_template('politics.html')
+    return render_template('policies.html')
     
 @app.route('/', methods=['GET', 'POST'])
 def index():
