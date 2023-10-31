@@ -3,4 +3,14 @@
         background-color: green;
         color: white; 
     }
+
+	.error-text {
+		font-size: 18px;
+		color: #FF0000; /* Red color */
+		font-weight: bold;
+		text-align: center;
+		margin: 10px 0; /* Add margin for spacing */
+	}
+
 </style>
+

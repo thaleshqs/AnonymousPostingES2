@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect
 from datetime import datetime
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='', static_folder='./templates')
 
 messages = []
 max_messages = 10
@@ -16,6 +16,9 @@ def politics():
 @app.route('/', methods=['GET', 'POST'])
 def index():
     filter_tag = request.args.get('filter')
+    filtered_messages = []
+    error_message = ""
+    
     if filter_tag is None:
         filter_tag = 'all'
 
@@ -62,10 +65,23 @@ def index():
             messages.append(message)
 
         
-
+    
     filtered_messages = [message for message in messages if filter_tag is None or filter_tag == 'all' or filter_tag in message['categories']]
+    
+    search_query = request.args.get('search')
+    if request.method == 'GET':
+        if search_query:
+            filtered_messages = [message for message in filtered_messages if search_query.lower() in message['post'].lower()]
+            if not filtered_messages:
+                error_message = "No results found!!!"
+            else:
+                error_message = ""
+                         
+            
+            
+    return render_template('index.html', messages=filtered_messages[-max_messages:], error=error_message, categories=["Secrets", "Family", "Health", "Confession", "Other"], filter=filter_tag, search=search_query)
 
-    return render_template('index.html', messages=filtered_messages[-max_messages:], error=None, categories=["Secrets", "Family", "Health", "Confession", "Other"], filter=filter_tag)
+    #return render_template('index.html', messages=filtered_messages[-max_messages:], error=None, categories=["Secrets", "Family", "Health", "Confession", "Other"], filter=filter_tag)
 
 if __name__ == '__main__':
     app.run()
