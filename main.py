@@ -31,7 +31,7 @@ def create_app():
     def politics():
         return render_template('policies.html')
 
-    @app.route('/', methods=['GET'],)
+    @app.route('/', methods=['GET'])
     def index_get():
         global previous_search
         error_message = ""
@@ -74,7 +74,10 @@ def create_app():
         else:
             add_post(name, post, timestamp, categories)
 
-        return render_template('index.html', messages=messages[-max_messages:], categories=["Secrets", "Family", "Health", "Confession", "Other"], filter=filter_tag, search=previous_search)
+        if previous_search is None:
+            return redirect(url_for('index_get', filter=filter_tag))
+        else:
+            return redirect(url_for('index_get', filter=filter_tag, search = previous_search))
 
     def add_post(name, post, timestamp, categories):
         message = Post(get_next_id(), name, post, timestamp, categories)
