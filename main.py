@@ -2,10 +2,10 @@ from flask import Flask, render_template, request, redirect, url_for
 from datetime import datetime
 
 messages = []
-filtered_messages = []
 max_messages = 10
 previous_search = None
-
+filtered_messages = []
+  
 class Post:
     def __init__(self, id, name, post, timestamp, categories):
         self.id = id
@@ -15,17 +15,37 @@ class Post:
         self.categories = categories
         self.comments = []
 
+    @classmethod
+    def add_post(cls, name, post, timestamp, categories):
+        message = cls(len(messages), name, post, timestamp, categories)
+        messages.append(message)
+
+    @classmethod
+    def filter_messages(cls, filter_tag, search_query):
+        global filtered_messages
+        filtered_messages = [message for message in messages if filter_tag is None or filter_tag == 'all' or filter_tag in message.categories]
+        if search_query is not None and search_query.strip():
+            filtered_messages = [message for message in filtered_messages if search_query.lower() in message.post.lower()]
+        return filtered_messages
+
 class Comment:
-    def __init__(self, parent_id, comment, timestamp,):
+    def __init__(self, parent_id, comment, timestamp):
         self.parent_id = parent_id
         self.comment = comment
         self.timestamp = timestamp
-        
+
+    @classmethod
+    def add_comment(cls, parent_id, comment):
+        comment_timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        comment_data = cls(parent_id, comment, comment_timestamp)
+
+        if parent_id is not (None or ""):
+            parent_id = int(parent_id)
+            if 0 <= parent_id < len(messages):
+                messages[parent_id].comments.append(comment_data)
+
 def create_app():
     app = Flask(__name__)
-
-    def get_next_id():
-        return len(messages)
 
     @app.route('/policies')
     def politics():
@@ -36,7 +56,7 @@ def create_app():
         global previous_search
         error_message = ""
         filter_tag = request.args.get('filter', 'all')
-        filtered_messages = filter_messages(filter_tag, previous_search)
+        filtered_messages = Post.filter_messages(filter_tag, previous_search)
         search_query = request.args.get('search')
         if search_query is not None and search_query.strip():
             filtered_messages = [message for message in filtered_messages if search_query.lower() in message.post.lower()]
@@ -70,33 +90,14 @@ def create_app():
         timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
         if comment:
-            add_comment(parent_id, comment)
+            Comment.add_comment(parent_id, comment)
         else:
-            add_post(name, post, timestamp, categories)
+            Post.add_post(name, post, timestamp, categories)
 
         if previous_search is None:
             return redirect(url_for('index_get', filter=filter_tag))
         else:
-            return redirect(url_for('index_get', filter=filter_tag, search = previous_search))
-
-    def add_post(name, post, timestamp, categories):
-        message = Post(get_next_id(), name, post, timestamp, categories)
-        messages.append(message)
-
-    def add_comment(parent_id, comment):
-        comment_timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        comment_data = Comment(parent_id, comment, comment_timestamp)
-
-        if parent_id:
-            parent_id = int(parent_id)
-            if parent_id >= 0 and parent_id < len(messages):
-                messages[parent_id].comments.append(comment_data)
-
-    def filter_messages(filter_tag, search_query):
-        filtered_messages = [message for message in messages if filter_tag is None or filter_tag == 'all' or filter_tag in message.categories]
-        if search_query is not None and search_query.strip():
-            filtered_messages = [message for message in filtered_messages if search_query.lower() in message.post.lower()]
-        return filtered_messages
+            return redirect(url_for('index_get', filter=filter_tag, search=previous_search))
 
     return app
 
