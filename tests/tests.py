@@ -216,7 +216,7 @@ class TestApp(unittest.TestCase):
 
     def test_post_message(self):
         response = self.client.post('/', data={'name': 'Test User', 'post': 'Test Message'})
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
     
     def test_post_message_and_check_content(self):
         response = self.client.post('/', data={'name': 'Test User', 'post': 'Test Message'}, follow_redirects=True)
@@ -317,10 +317,10 @@ class TestApp(unittest.TestCase):
     
     def test_post_two_messages(self):
         response1 = self.client.post('/', data={'name': 'Test User 1', 'post': 'Test Message 1'})
-        self.assertEqual(response1.status_code, 200)
+        self.assertEqual(response1.status_code, 302)
 
         response2 = self.client.post('/', data={'name': 'Test User 2', 'post': 'Test Message 2'})
-        self.assertEqual(response2.status_code, 200)
+        self.assertEqual(response2.status_code, 302)
     
     def test_post_two_messages_and_check_content(self):
         response1 = self.client.post('/', data={'name': 'Test User 1', 'post': 'Test Message 1'}, follow_redirects=True)
@@ -466,7 +466,7 @@ class TestApp(unittest.TestCase):
     def test_single_result_found_with_search(self):
         data1 = {'name': 'Test User 1','post': 'Test Message 1',}
         response1 = self.client.post('/', data=data1)
-        self.assertEqual(response1.status_code, 200)
+        self.assertEqual(response1.status_code, 302)
         response = self.client.get('/?search=Test')
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'Test Message 1', response.data)
