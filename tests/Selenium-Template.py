@@ -39,5 +39,5 @@ class SystemTest(unittest.TestCase):
       post_input.send_keys(Keys.RETURN)
   
       time.sleep(2)
-      assert 'This is a test post. ' in driver.page_source
+      assert 'Wrong Text' in driver.page_source
       assert 'This is a test comment.' in driver.page_source
