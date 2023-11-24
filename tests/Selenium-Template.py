@@ -33,7 +33,5 @@ for option in options:
     
 driver = webdriver.Chrome(options = chrome_options)
 
-driver.get('http://github.com')
+driver.get('http://127.0.0.1:5000')
 print(driver.title)
-with open('./GitHub_Action_Results.txt', 'w') as f:
-    f.write(f"This was written with a GitHub action {driver.title}")
