@@ -27,6 +27,8 @@ jobs:
         
       - name: Commit and Push The Results From Python Selenium Action
         run: |
-         git add -A
-         git commit -m "GitHub Actions Results added"
-         git push
+          git config --global user.email "thalesgtav@gmail.com"
+          git config --global user.name "thaleshqs"
+          git add -A
+          git commit -m "GitHub Actions Results added"
+          git push
