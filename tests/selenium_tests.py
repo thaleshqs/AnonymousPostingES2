@@ -42,7 +42,6 @@ class SystemTest(unittest.TestCase):
             time.sleep(2)
             assert 'This is a test post' in self.driver.page_source
 
-    
     def test_write_post_and_comment(self):
         try:
             self.driver.get(self.app_url)
