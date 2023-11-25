@@ -94,5 +94,33 @@ class SystemTest(unittest.TestCase):
             print(f"Exception in test_write_post_with_category_and_use_filter: {e}")
             raise
 
+    def test_write_post_and_search(self):
+        try:
+            self.driver.get(self.app_url)
+
+            name_input = self.driver.find_element('name', 'name')
+            post_input = self.driver.find_element('name', 'post')
+            submit_button = self.driver.find_element(By.CSS_SELECTOR, "button[type='submit']")
+
+            name_input.send_keys('John Doe')
+            post_input.send_keys('This is a test post.')
+            submit_button.click()
+
+            time.sleep(2)
+
+            search_input = self.driver.find_element('name', 'search')
+            search_button = self.driver.find_element(By.CSS_SELECTOR, "button#search_button")
+
+            search_input.send_keys('test post')
+            search_button.click()
+
+            time.sleep(2)
+
+            assert 'This is a test post.' in self.driver.page_source
+
+        except Exception as e:
+            print(f"Exception in test_send_post_and_search: {e}")
+            raise
+            
 if __name__ == '__main__':
     unittest.main()
