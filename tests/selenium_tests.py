@@ -45,6 +45,23 @@ class SystemTest(unittest.TestCase):
         except Exception as e:
             print(f"Exception in test_write_post: {e}")
             raise
+    
+    def test_write_empty_post(self):
+        try:
+            self.driver.get(self.app_url)
+
+            name_input = self.driver.find_element('name', 'name')
+            post_input = self.driver.find_element('name', 'post')
+
+            name_input.send_keys('John Doe')
+            post_input.send_keys(Keys.RETURN)
+
+            time.sleep(2)
+            assert 'Message or comment cannot be blank.' in self.driver.page_source
+
+        except Exception as e:
+            print(f"Exception in test_write_empty_post: {e}")
+            raise
 
     def test_write_post_and_comment(self):
         try:
