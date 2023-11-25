@@ -1,6 +1,8 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+
 import chromedriver_autoinstaller
 from pyvirtualdisplay import Display
 import time
@@ -31,7 +33,7 @@ class SystemTest(unittest.TestCase):
       name_input = self.driver.find_element('name', 'name')
       post_input = self.driver.find_element('name', 'post')
       #comment_input = self.driver.find_element('name', 'comment')
-      comment_input = self.driver.find_element_by_css_selector('input[name="comment"]')
+      comment_input = self.driver.find_element(By.CSS_SELECTOR, 'input[name="comment"]')
 
       name_input.send_keys('John Doe')
       post_input.send_keys('This is a test post.')
@@ -48,8 +50,8 @@ def test_write_post_with_category_and_use_filter(self):
 
     name_input = self.driver.find_element('name', 'name')
     post_input = self.driver.find_element('name', 'post')
-    categories_checkbox = self.driver.find_element_by_xpath("//input[@value='Secrets']")
-    submit_button = self.driver.find_element('css_selector', "button[type='submit']")
+    categories_checkbox = self.driver.find_element(By.XPATH, "//input[@value='Secrets']")
+    submit_button = self.driver.find_element(By.CSS_SELECTOR, "button[type='submit']")
 
     name_input.send_keys('John Doe')
     post_input.send_keys('This is a secret post.')
@@ -58,7 +60,7 @@ def test_write_post_with_category_and_use_filter(self):
 
     time.sleep(2)
 
-    secrets_filter_button = self.driver.find_element_by_css_selector("button[value='Secrets']")
+    secrets_filter_button = self.driver.find_element('"button[value='Secrets']")
     secrets_filter_button.click()
 
     time.sleep(2)
