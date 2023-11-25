@@ -39,8 +39,30 @@ class SystemTest(unittest.TestCase):
       post_input.send_keys(Keys.RETURN)
   
       time.sleep(2)
-      assert 'Wrong Text' in self.driver.page_source
+      assert 'This is a test post' in self.driver.page_source
       assert 'This is a test comment.' in self.driver.page_source
+
+def test_write_post_with_category_and_use_filter(self):
+    self.driver.get(app_url)
+
+    name_input = self.driver.find_element('name', 'name')
+    post_input = self.driver.find_element('name', 'post')
+    categories_checkbox = self.driver.find_element_by_xpath("//input[@value='Secrets']")
+    submit_button = self.driver.find_element_by_css_selector("button[type='submit']")
+
+    name_input.send_keys('John Doe')
+    post_input.send_keys('This is a secret post.')
+    categories_checkbox.click()
+    submit_button.click()
+
+    time.sleep(2)
+
+    secrets_filter_button = self.driver.find_element_by_css_selector("button[value='Secrets']")
+    secrets_filter_button.click()
+
+    time.sleep(2)
+    assert 'This is a secret post.' in self.driver.page_source
+
 
 if __name__ == '__main__':
   unittest.main()
