@@ -28,9 +28,9 @@ class SystemTest(unittest.TestCase):
   def test_write_post_and_comment(self):
       self.driver.get(self.app_url)
     
-      name_input = self.driver.find_element_by_name('name')
-      post_input = self.driver.find_element_by_name('post')
-      comment_input = self.driver.find_element_by_name('comment')
+      name_input = self.driver.find_element('name', 'name')
+      post_input = self.driver.find_element('name', 'post')
+      comment_input = self.driver.find_element('name', 'comment')
   
       name_input.send_keys('John Doe')
       post_input.send_keys('This is a test post.')
