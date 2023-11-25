@@ -60,7 +60,7 @@ def test_write_post_with_category_and_use_filter(self):
 
     time.sleep(2)
 
-    secrets_filter_button = self.driver.find_element('"button[value='Secrets']")
+    secrets_filter_button = self.driver.find_element(By.CSS_SELECTOR, '"button[value='Secrets']")
     secrets_filter_button.click()
 
     time.sleep(2)
