@@ -30,8 +30,9 @@ class SystemTest(unittest.TestCase):
     
       name_input = self.driver.find_element('name', 'name')
       post_input = self.driver.find_element('name', 'post')
-      comment_input = self.driver.find_element('name', 'comment')
-  
+      #comment_input = self.driver.find_element('name', 'comment')
+      comment_input = self.driver.find_element_by_css_selector('input[name="comment"]')
+
       name_input.send_keys('John Doe')
       post_input.send_keys('This is a test post.')
       comment_input.send_keys('This is a test comment.')
