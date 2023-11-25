@@ -8,6 +8,7 @@ import unittest
 
 class SystemTest(unittest.TestCase):
   def setUp(self):
+    print('Set up')
     display = Display(visible=0, size=(800, 800))  
     display.start()
     
@@ -41,3 +42,6 @@ class SystemTest(unittest.TestCase):
       time.sleep(2)
       assert 'Wrong Text' in driver.page_source
       assert 'This is a test comment.' in driver.page_source
+
+if __name__ == '__main__':
+  unittest.main()
