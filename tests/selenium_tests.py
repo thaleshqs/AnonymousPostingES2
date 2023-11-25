@@ -27,7 +27,7 @@ class SystemTest(unittest.TestCase):
 
     def tearDown(self):
         self.driver.quit()
-    
+
     def test_write_post(self):
         try:
             self.driver.get(self.app_url)
@@ -42,6 +42,10 @@ class SystemTest(unittest.TestCase):
             time.sleep(2)
             assert 'This is a test post' in self.driver.page_source
 
+        except Exception as e:
+            print(f"Exception in test_write_post: {e}")
+            raise
+
     def test_write_post_and_comment(self):
         try:
             self.driver.get(self.app_url)
@@ -54,13 +58,13 @@ class SystemTest(unittest.TestCase):
             post_input.send_keys(Keys.RETURN)
 
             time.sleep(2)
-            
+
             comment_input = self.driver.find_element(By.CSS_SELECTOR, 'input[name="comment"]')
             comment_input.send_keys('This is a test comment.')
             comment_input.send_keys(Keys.RETURN)
-            
+
             time.sleep(2)
-            
+
             assert 'This is a test post' in self.driver.page_source
             assert 'This is a test comment.' in self.driver.page_source
 
@@ -119,8 +123,8 @@ class SystemTest(unittest.TestCase):
             assert 'This is a test post.' in self.driver.page_source
 
         except Exception as e:
-            print(f"Exception in test_send_post_and_search: {e}")
+            print(f"Exception in test_write_post_and_search: {e}")
             raise
-            
+
 if __name__ == '__main__':
     unittest.main()
