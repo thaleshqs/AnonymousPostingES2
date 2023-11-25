@@ -8,7 +8,6 @@ import unittest
 
 class SystemTest(unittest.TestCase):
   def setUp(self):
-    print('Set up')
     display = Display(visible=0, size=(800, 800))  
     display.start()
     
