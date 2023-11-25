@@ -43,4 +43,4 @@ jobs:
 
     - name: Run Selenium test
       run: |
-        python tests/Selenium-Template.py
+        python tests/selenium_tests.py
