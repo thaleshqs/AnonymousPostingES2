@@ -27,7 +27,22 @@ class SystemTest(unittest.TestCase):
 
     def tearDown(self):
         self.driver.quit()
+    
+    def test_write_post(self):
+        try:
+            self.driver.get(self.app_url)
 
+            name_input = self.driver.find_element('name', 'name')
+            post_input = self.driver.find_element('name', 'post')
+
+            name_input.send_keys('John Doe')
+            post_input.send_keys('This is a test post.')
+            post_input.send_keys(Keys.RETURN)
+
+            time.sleep(2)
+            assert 'This is a test post' in self.driver.page_source
+
+    
     def test_write_post_and_comment(self):
         try:
             self.driver.get(self.app_url)
