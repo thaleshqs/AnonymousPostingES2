@@ -49,7 +49,7 @@ def test_write_post_with_category_and_use_filter(self):
     name_input = self.driver.find_element('name', 'name')
     post_input = self.driver.find_element('name', 'post')
     categories_checkbox = self.driver.find_element_by_xpath("//input[@value='Secrets']")
-    submit_button = self.driver.find_element_by_css_selector("button[type='submit']")
+    submit_button = self.driver.find_element('css_selector', "button[type='submit']")
 
     name_input.send_keys('John Doe')
     post_input.send_keys('This is a secret post.')
