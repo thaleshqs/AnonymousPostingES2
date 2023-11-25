@@ -27,11 +27,11 @@ class SystemTest(unittest.TestCase):
     self.driver.quit()
 
   def test_write_post_and_comment(self):
-      driver.get(self.app_url)
+      self.driver.get(self.app_url)
     
-      name_input = driver.find_element_by_name('name')
-      post_input = driver.find_element_by_name('post')
-      comment_input = driver.find_element_by_name('comment')
+      name_input = self.driver.find_element_by_name('name')
+      post_input = self.driver.find_element_by_name('post')
+      comment_input = self.driver.find_element_by_name('comment')
   
       name_input.send_keys('John Doe')
       post_input.send_keys('This is a test post.')
@@ -40,8 +40,8 @@ class SystemTest(unittest.TestCase):
       post_input.send_keys(Keys.RETURN)
   
       time.sleep(2)
-      assert 'Wrong Text' in driver.page_source
-      assert 'This is a test comment.' in driver.page_source
+      assert 'Wrong Text' in self.driver.page_source
+      assert 'This is a test comment.' in self.driver.page_source
 
 if __name__ == '__main__':
   unittest.main()
