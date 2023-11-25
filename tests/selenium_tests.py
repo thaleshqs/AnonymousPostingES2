@@ -37,13 +37,16 @@ class SystemTest(unittest.TestCase):
 
             name_input.send_keys('John Doe')
             post_input.send_keys('This is a test post.')
-
-            comment_input = self.driver.find_element(By.CSS_SELECTOR, 'input[name="comment"]')
-            comment_input.send_keys('This is a test comment.')
-
             post_input.send_keys(Keys.RETURN)
 
             time.sleep(2)
+            
+            comment_input = self.driver.find_element(By.CSS_SELECTOR, 'input[name="comment"]')
+            comment_input.send_keys('This is a test comment.')
+            comment_input.send_keys(Keys.RETURN)
+            
+            time.sleep(2)
+            
             assert 'This is a test post' in self.driver.page_source
             assert 'This is a test comment.' in self.driver.page_source
 
