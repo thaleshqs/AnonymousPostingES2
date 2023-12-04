@@ -59,7 +59,7 @@ class SystemTest(unittest.TestCase):
             post_input.send_keys(Keys.RETURN)
     
             WebDriverWait(self.driver, 10).until(
-                EC.text_to_be_present_in_element((By.XPATH, "//*div[@class='alert alert-danger mt-3']"), 'Message or comment cannot be blank.')
+                EC.text_to_be_present_in_element((By.XPATH, "//div[@class='alert alert-danger mt-3']"), 'Message or comment cannot be blank.')
             )
             assert 'Message or comment cannot be blank.' in self.driver.page_source
     
