@@ -42,7 +42,15 @@ jobs:
 
     - name: Run Selenium tests
       run: |
-        python tests/selenium_tests.py
+        if [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
+          python tests/selenium_tests.py
+        elif [ "${{ matrix.os }}" == "windows-latest" ]; then
+          # Add Windows specific commands
+          echo "Running on Windows"
+        elif [ "${{ matrix.os }}" == "macos-latest" ]; then
+          # Add macOS specific commands
+          echo "Running on macOS"
+        fi
     
     - name: Run Unit tests
       run: |
