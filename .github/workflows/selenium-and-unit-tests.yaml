@@ -70,10 +70,10 @@ jobs:
       run: sleep 10
 
     - name: Run Selenium tests
-      run: echo "Add Windows-specific Selenium test command here"
+      run: python tests/selenium_tests.py
 
     - name: Run Unit tests
-      run: echo "Add Windows-specific unit test command here"
+      run: python tests/unit_tests.py
 
   test-macos:
     runs-on: macos-latest
@@ -104,7 +104,7 @@ jobs:
       run: sleep 10
 
     - name: Run Selenium tests
-      run: echo "Add macOS-specific Selenium test command here"
+      run: python tests/selenium_tests.py
 
     - name: Run Unit tests
-      run: echo "Add macOS-specific unit test command here"
+      run: python tests/unit_tests.py
