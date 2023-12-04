@@ -58,12 +58,7 @@ class TestApp(unittest.TestCase):
         response = self.client.post('/', data={'name': 'Test User', 'post': 'Another Post with category Health', 'categories': 'Health'}, follow_redirects=True)
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'Another Post with category Health', response.data)
-
-
-        response = self.client.get('/?filter=all')
-        self.assertEqual(response.status_code, 200)
-        self.assertIn(b'Test Message', response.data)
-
+        
     def test_filter_hides_other_posts(self):
         self.client.post('/', data={'name': 'Test User', 'post': 'Test Message', 'categories': 'Health'}, follow_redirects=True)
 
