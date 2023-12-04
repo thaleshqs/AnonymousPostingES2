@@ -12,12 +12,6 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
     runs-on: ${{ matrix.os }}
 
-    services:
-      selenium-chrome:
-        image: selenium/standalone-chrome:latest
-        ports:
-          - 4444:4444
-
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -26,11 +20,13 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: 3.8
-    - name: Installing all necessary packages
-      run: pip install chromedriver-autoinstaller selenium pyvirtualdisplay
-    - name: Install xvfb
-      run: sudo apt-get install xvfb
 
+    - name: Installing all necessary packages
+      run: |
+        pip install chromedriver-autoinstaller selenium pyvirtualdisplay
+        if [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
+          sudo apt-get install xvfb
+        fi
 
     - name: Install dependencies
       run: |
