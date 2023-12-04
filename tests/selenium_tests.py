@@ -34,18 +34,16 @@ class SystemTest(unittest.TestCase):
         try:
             self.driver.get(self.app_url)
 
-            name_input = self.driver.find_element('name', 'name')
-            post_input = self.driver.find_element('name', 'post')
 
+            name_input = self.driver.find_element(By.XPATH, "//input[@name='name']")
+            post_input = self.driver.find_element(By.XPATH, "//input[@name='post']")
             name_input.send_keys('John Doe')
             post_input.send_keys('This is a test post.')
             post_input.send_keys(Keys.RETURN)
-
-            wait = WebDriverWait(self.driver, 10)
-            wait.until(EC.page_source('This is a test post'))
-
+            WebDriverWait(self.driver, 10).until(
+                EC.text_to_be_present_in_element((By.XPATH, "//*[contains(text(), 'This is a test post')]"), 'This is a test post')
+            )
             assert 'This is a test post' in self.driver.page_source
-
         except Exception as e:
             print(f"Exception in test_write_post: {e}")
             raise
