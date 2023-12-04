@@ -3,6 +3,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support import expected_conditions as EC
 
 import chromedriver_autoinstaller
 from pyvirtualdisplay import Display
@@ -39,7 +40,9 @@ class SystemTest(unittest.TestCase):
             post_input.send_keys('This is a test post.')
             post_input.send_keys(Keys.RETURN)
 
-            time.sleep(2)
+            wait = WebDriverWait(self.driver, 10)
+            wait.until(EC.page_source('This is a test post'))
+
             assert 'This is a test post' in self.driver.page_source
 
         except Exception as e:
