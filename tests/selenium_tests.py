@@ -86,7 +86,7 @@ class SystemTest(unittest.TestCase):
             comment_input.send_keys(Keys.RETURN)
     
             WebDriverWait(self.driver, 10).until(
-                EC.text_to_be_present_in_element((By.XPATH, "//div[@class='card-footer']/blockquote/p"), 'This is a test comment.')
+                EC.text_to_be_present_in_element((By.XPATH, "//div[@class='card-footer']"), 'This is a test comment.')
             )
     
             assert 'This is a test post' in self.driver.page_source
