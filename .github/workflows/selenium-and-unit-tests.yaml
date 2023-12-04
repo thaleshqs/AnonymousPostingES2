@@ -70,10 +70,10 @@ jobs:
       run: sleep 10
 
     - name: Run Selenium tests
-      run: python tests/selenium_tests.py
+      run: python tests\selenium_tests.py
 
     - name: Run Unit tests
-      run: python tests/unit_tests.py
+      run: python tests\unit_tests.py
 
   test-macos:
     runs-on: macos-latest
