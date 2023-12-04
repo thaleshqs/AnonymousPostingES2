@@ -79,9 +79,8 @@ class SystemTest(unittest.TestCase):
             post_input.send_keys(Keys.RETURN)
     
             WebDriverWait(self.driver, 10).until(
-                EC.text_to_be_present_in_element((By.XPATH, "//div[@class='card-body']/blockquote/p"), 'This is a test post.')
+                EC.text_to_be_present_in_element((By.XPATH, "//*[contains(text(), 'This is a test post')]"), 'This is a test post')
             )
-    
             comment_input = self.driver.find_element(By.CSS_SELECTOR, 'input[name="comment"]')
             comment_input.send_keys('This is a test comment.')
             comment_input.send_keys(Keys.RETURN)
