@@ -1,7 +1,7 @@
 import unittest
 import sys
 from flask import Flask
-sys.path.append('../')  
+sys.path.append('./')  
 from main import app, messages, previous_search, filtered_messages, create_app
 app.config['TESTING'] = True
 app.config['WTF_CSRF_ENABLED'] = False  
