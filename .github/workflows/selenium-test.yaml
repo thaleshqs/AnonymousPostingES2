@@ -1,4 +1,4 @@
-name: Selenium Test
+name: Selenium Tests and Unit Tests
 
 on:
   push:
@@ -41,6 +41,10 @@ jobs:
     - name: Wait for Flask to start
       run: sleep 10
 
-    - name: Run Selenium test
+    - name: Run Selenium tests
       run: |
         python tests/selenium_tests.py
+    
+    - name: Run Unit tests
+      run: |
+        python tests/unit_tests.py
